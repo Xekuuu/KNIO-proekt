@@ -9,7 +9,7 @@ import time
 
 app = Flask(__name__)
 
-# logo
+# testiranje gluposti
 company_logos = {
     "finki": "https://finki.ukim.mk/sites/default/files/logo_0_0.png",
     "linkedin": "https://cdn-icons-png.flaticon.com/512/174/174857.png",
@@ -20,13 +20,12 @@ company_logos = {
     "cosmic development": "https://media.licdn.com/dms/image/D4D0BAQF2UJHqVqV3fg/company-logo_200_200/0/1693301162083/cosmic_development_logo?e=2147483647&v=beta&t=m0RCX-Ve8cUBjXjKZtItHOJlKnDcfPlvwRDtfuydPGA",
 }
 
-# Logo matcher
+# Logo test
 def match_logo(name):
     name = name.lower()
     for company, logo_url in company_logos.items():
         if company in name:
             return logo_url
-    # Try Clearbit logo fallback
     domain_guess = name.replace(" ", "") + ".com"
     return f"https://logo.clearbit.com/{domain_guess}"
 
@@ -34,30 +33,40 @@ def match_logo(name):
 def scrape_jobs():
     job_list = []
 
-    # FINKI jobs
+    # FINKI
     url_college = "https://finki.ukim.mk/mk/jobs-and-internships"
     base_college = "https://finki.ukim.mk"
     response = requests.get(url_college)
     soup = BeautifulSoup(response.text, 'html.parser')
-    results = soup.select('span.field-content > a')
 
-    for tag in results:
-        title = tag.get_text(strip=True)
-        href = base_college + tag['href']
-        logo = match_logo("finki")
+    # ime + link
+    title_tags = soup.select('span.field-content > a')
+
+    # logo
+    image_tags = soup.select('div.field-content img')
+
+    # what the heli 🚁 meine spliff 2.5 exotic 🚁
+    for title_tag, image_tag in zip(title_tags, image_tags):
+        title = title_tag.get_text(strip=True)
+        href = base_college + title_tag['href']
+
+        image_url = image_tag.get('src')
+        if image_url.startswith('/'):
+            image_url = base_college + image_url
+
         job_list.append({
             'title': title,
             'link': href,
-            'image': logo
+            'image': image_url
         })
 
-    # LinkedIn jobs
+    # LinkedIn
     url_linkedin = "https://mk.linkedin.com/jobs/junior-programmer-jobs?countryRedirected=1"
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless')
+    options.add_argument('--headless') #<--- izbrisi za debugging
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url_linkedin)
-    time.sleep(5)
+    time.sleep(5) # klaj na poke ako kajvas ne loadnuva/nema rezultati
 
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     driver.quit()
@@ -73,7 +82,7 @@ def scrape_jobs():
             href = title_elem['href']
             company = company_elem.get_text(strip=True) if company_elem else ""
 
-            if any(keyword in title.lower() for keyword in ['intern', 'junior', 'entry']):
+            if any(keyword in title.lower() for keyword in ['intern', 'junior', 'entry']): #nez drugi keywords za praksa
                 logo = match_logo(company or title)
                 job_list.append({
                     'title': f"{title} at {company}" if company else title,

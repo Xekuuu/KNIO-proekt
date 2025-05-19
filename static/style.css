@@ -21,6 +21,7 @@ body {
 .story1 {
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     width: 300px;
     height: 180px;
     padding: 20px;
@@ -28,15 +29,38 @@ body {
     flex-direction: column;
     justify-content: flex-end;
     color: white;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
     border-radius: 15px;
     position: relative;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
     transition: transform 0.3s ease;
+    overflow: hidden;
+    aspect-ratio: 5 / 3; /* dzabe */
+}
+
+/* crn background nad image */
+.story1::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 0;
+    border-radius: 15px;
 }
 
 .story1:hover {
     transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.1); /* na animacija */
+}
+
+.story1 h3,
+.story1 p,
+.story1 a {
+    position: relative;
+    z-index: 100;
 }
 
 .story1 h3 {
