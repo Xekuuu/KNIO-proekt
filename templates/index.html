@@ -10,7 +10,8 @@
 <section class="stories1">
     <div class="story-container1">
         {% for job in jobs %}
-        <div class="story1" style="background-image: url('{{ job.image }}');">
+        <div class="story1">
+            <img src="{{ job.image }}" alt="{{ job.title }}">
             <h3>{{ job.title }}</h3>
             <p><a href="{{ job.link }}" target="_blank">View Posting</a></p>
         </div>
