@@ -150,10 +150,18 @@ def scrape_jobs():
 
     return job_list
 
+
 @app.route("/")
+def loading():
+    return render_template("loading.html")
+
+
+@app.route("/index")
 def index():
     jobs = scrape_jobs()
     return render_template("index.html", jobs=jobs)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
