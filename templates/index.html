@@ -1,22 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Internship Opportunities</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta http-equiv="refresh" content="60"> <!-- Auto-refresh every 60 seconds -->
-</head>
-<body>
-<section class="stories1">
-    <div class="story-container1">
-        {% for job in jobs %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <meta http-equiv="refresh" content="60" />
+    <!-- Auto-refresh every 60 seconds -->
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul>
+        <li><a href="{{ url_for('loading') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+      </ul>
+    </nav>
+
+    <section class="job-section">
+      <h2>FINKI Partnered Internships</h2>
+      <div class="story-container1">
+        {% for job in jobs %} {% if job.source == 'FINKI' %}
         <div class="story1">
-            <img src="{{ job.image }}" alt="{{ job.title }}">
-            <h3>{{ job.title }}</h3>
-            <p><a href="{{ job.link }}" target="_blank">View Posting</a></p>
+          <img src="{{ job.image }}" alt="{{ job.title }}" />
+          <h3>{{ job.title }}</h3>
+          <p>
+            <a href="{{ job.link }}" target="_blank" rel="noopener noreferrer"
+              >View Posting</a
+            >
+          </p>
         </div>
-        {% endfor %}
-    </div>
-</section>
-</body>
+        {% endif %} {% endfor %}
+      </div>
+    </section>
+
+    <section class="job-section">
+      <h2>LinkedIn Internships</h2>
+      <div class="story-container1">
+        {% for job in jobs %} {% if job.source == 'LinkedIn' %}
+        <div class="story1">
+          <img
+            src="{{ job.image or url_for('static', filename='default_logo.png') }}"
+            alt="{{ job.title }}"
+          />
+          <h3>{{ job.title }}</h3>
+          <p>
+            <a href="{{ job.link }}" target="_blank" rel="noopener noreferrer"
+              >View Posting</a
+            >
+          </p>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© 2025 Internship Portal - FINKI & LinkedIn</p>
+    </footer>
+  </body>
 </html>

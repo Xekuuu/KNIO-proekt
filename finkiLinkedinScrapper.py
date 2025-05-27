@@ -54,10 +54,12 @@ def scrape_jobs():
         if image_url.startswith('/'):
             image_url = base_college + image_url
 
+        # dodaen source : finki
         job_list.append({
             'title': title,
             'link': href,
-            'image': image_url
+            'image': image_url,
+            'source' : 'FINKI'
         })
 
     # LinkedIn
@@ -132,11 +134,12 @@ def scrape_jobs():
                                 break
 
 
-
+                #dodaen source:linkedin
                 job_list.append({
                     'title': f"{title} at {company}" if company else title,
                     'link': href,
-                    'image': image_url
+                    'image': image_url,
+                    'source' : 'LinkedIn'
                 })
 
             except Exception as e:
@@ -161,6 +164,9 @@ def index():
     jobs = scrape_jobs()
     return render_template("index.html", jobs=jobs)
 
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 
 if __name__ == "__main__":
