@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <ul>
+        <li><a href="{{ url_for('loading') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+      </ul>
+    </nav>
+
+    <section class="about-section">
+      <div class="container">
+        <h1>About This Website</h1>
+        <p>
+          This platform was developed with a simple goal in mind — to support
+          FINKI students in navigating the often overwhelming process of finding
+          internships. With technology advancing rapidly, hands-on experience is
+          crucial, and we aim to bridge the gap between education and
+          opportunity.
+        </p>
+        <p>
+          The website automatically scrapes two main sources:
+          <strong>1)</strong>
+          <em>Internship listings posted on the official FINKI website</em> from
+          partnered companies, and <strong>2)</strong>
+          <em>Junior-level and internship positions from LinkedIn</em>. The
+          results are displayed in a clear, user-friendly way to help students
+          make informed choices.
+        </p>
+        <p>
+          The site updates automatically to provide fresh listings and reduce
+          the need for manual job searching. Every opportunity shown is meant to
+          be relevant, accessible, and student-focused.
+        </p>
+        <p>
+          Built as a side project by a fellow FINKI student, this tool is
+          open-source, lightweight, and designed to grow with your feedback.
+          Thank you for using it — and good luck on your career journey!
+        </p>
+      </div>
+    </section>
+  </body>
+</html>
